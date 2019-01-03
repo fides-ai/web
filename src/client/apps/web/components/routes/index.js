@@ -17,7 +17,7 @@ const Routes = () => (
         <div>
             <Route path="/" component={AnalyticsRouteTracker}/>
             <Switch>
-                <Route path="/login" component={LoginPage}/>
+                {/* <Route path="/login" component={LoginPage}/> */}
                 <SecuredRoute exact path="/" render={() => (
                     <Layout>
                         <Switch>

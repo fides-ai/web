@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from "react-redux";
-import {getUser} from '../../reducers';
+// import {getUser} from '../../reducers';
 
 
 class SecuredRoute extends Route {
@@ -18,7 +18,7 @@ class SecuredRoute extends Route {
     }
 
     render() {
-        if (!this.isAuthenticated()) {
+        if (false && !this.isAuthenticated()) {
             return (<Redirect to={{
                 pathname: '/login',
                 state: {from: this.props.location}
@@ -34,7 +34,7 @@ class SecuredRoute extends Route {
 // };
 
 const mapStateToProps = (state) => {
-    const user = getUser(state) || {};
+    const user = {};
     const {loggedIn} = user;
     return {
         loggedIn

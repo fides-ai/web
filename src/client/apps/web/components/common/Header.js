@@ -16,12 +16,12 @@ const Header = () => {
             <a href="/" className="logo">
                 <span className="logo-mini">
                 <img
-                    src="https://res.cloudinary.com/shopspree/image/fetch/w_80,c_fill/https%3A%2F%2Fs3.amazonaws.com%2Fstatic.spree.co%2Fimages%2Flogo_spree_800_white.png"
+                    src=""
                     style={{"width": "40px", "height": "auto"}}/>
             </span>
                 <span className="logo-lg">
                 <img
-                    src="https://res.cloudinary.com/shopspree/image/fetch/w_160,c_fill/https%3A%2F%2Fs3.amazonaws.com%2Fstatic.spree.co%2Fimages%2Flogo_spree_800_white.png"
+                    src=""
                     style={{"width": "80px", "height": "auto"}}/>
                 <span className="beta" style={{"fontSize": "10px", "marginLeft": "3px"}}>beta</span>
             </span>

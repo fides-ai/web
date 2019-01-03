@@ -5,7 +5,6 @@
 'use strict';
 
 
-import AuthenticationApi from '../../../api/AuthenticationApi';
 import {loadKey} from '../../../services/local-storage';
 import {initializeAnalytics} from "../../../services/analytics";
 

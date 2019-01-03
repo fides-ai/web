@@ -13,7 +13,7 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
-            __SERVER__: JSON.stringify('http://api.spree.co'),
+            __SERVER__: JSON.stringify('http://35.245.17.134'),
             __GA_TRACKING_ID__: JSON.stringify('UA-57226696-10'),
         }),
         new UglifyJSPlugin({

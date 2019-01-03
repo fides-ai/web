@@ -8,7 +8,6 @@ import React from 'react';
 import {logout} from "../../actions";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {getUser} from "../../reducers";
 import {loadKey} from "../../../../services/local-storage";
 
 
@@ -28,7 +27,7 @@ class Aside extends React.Component {
 
     render() {
         const user = loadKey('user');
-        if (!user.loggedIn) {
+        if (!user || !user.loggedIn) {
             return (<Redirect to={{pathname: '/login'}}/>);
         }
 
@@ -49,17 +48,14 @@ class Aside extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const user = getUser(state) || {};
-    const {loggedIn} = user;
     return {
-        ...ownProps,
-        loggedIn
+        ...ownProps
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({logout, getUser}, dispatch)
+        actions: bindActionCreators({}, dispatch)
     };
 };
 

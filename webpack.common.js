@@ -8,7 +8,7 @@ const SRC = path.resolve(__dirname, 'src/client');
 
 module.exports = {
     entry: {
-        console: [`${SRC}/apps/console/index.js`]
+        web: [`${SRC}/apps/web/index.js`]
     },
     output: {
         path: DIST,

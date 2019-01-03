@@ -20,4 +20,4 @@ export default rootReducer;
 
 // selectors
 
-export const getUser = (state) => fromAuthentication.getUser(state.authentication);
+// export const getUser = (state) => fromAuthentication.getUser(state.authentication);

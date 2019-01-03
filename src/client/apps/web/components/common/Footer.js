@@ -14,7 +14,7 @@ const Footer = () => {
 
             </div>
             {/*<!-- Default to the left -->*/}
-            <strong>Copyright &copy; 2018 <a href="#">Spree</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2018 <a href="#">Fides</a>.</strong> All rights reserved.
         </footer>
     );
 };
