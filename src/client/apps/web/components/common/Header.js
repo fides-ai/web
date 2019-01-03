@@ -9,7 +9,7 @@ import {loadKey} from "../../../../services/local-storage";
 
 const Header = () => {
     const user = loadKey('user');
-    const username = user.email || 'Guest';
+    const username = user && user.email || 'Guest';
     return (
         <header className="main-header">
 

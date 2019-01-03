@@ -28,7 +28,7 @@ class Aside extends React.Component {
     render() {
         const user = loadKey('user');
         if (!user || !user.loggedIn) {
-            return (<Redirect to={{pathname: '/login'}}/>);
+            // return (<Redirect to={{pathname: '/login'}}/>); 
         }
 
         return (
