@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fides-web-service
+spec:
+  selector:
+    app: fides-prod
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+  - name: https
+    port: 443
+    targetPort: 3000
+  type: LoadBalancer
+  loadBalancerIP: 35.245.145.93 # <- Update IP Here
