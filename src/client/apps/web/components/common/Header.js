@@ -5,10 +5,9 @@
 'use strict';
 
 import React from 'react';
-import {loadKey} from "../../../../services/local-storage";
 
-const Header = () => {
-    const user = loadKey('user');
+
+const Header = ({ user }) => {
     const username = user && user.email || 'Guest';
     return (
         <header className="main-header">

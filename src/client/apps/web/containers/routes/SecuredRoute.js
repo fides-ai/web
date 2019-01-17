@@ -29,9 +29,9 @@ class SecuredRoute extends Route {
     }
 }
 
-// SecuredRoute.propTypes = {
-//     loggedIn: PropTypes.bool
-// };
+SecuredRoute.propTypes = {
+    loggedIn: PropTypes.bool
+};
 
 const mapStateToProps = (state) => {
     const user = {};

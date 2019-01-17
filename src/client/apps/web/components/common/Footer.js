@@ -6,6 +6,7 @@
 
 import React from 'react';
 
+
 const Footer = () => {
     return (
         <footer className="main-footer">
@@ -14,7 +15,7 @@ const Footer = () => {
 
             </div>
             {/*<!-- Default to the left -->*/}
-            <strong>Copyright &copy; 2018 <a href="#">Fides</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2019 <a href="#">Fides</a>.</strong> All rights reserved.
         </footer>
     );
 };

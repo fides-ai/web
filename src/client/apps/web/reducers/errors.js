@@ -1,10 +1,10 @@
 /**
- * Created by asafam on 01/03/2019.
+ * Created by asafam on 20/07/2017.
  */
 
 'use strict';
 
-import {types} from "../actions";
+import {types} from "../actions/app";
 
 
 // reducers

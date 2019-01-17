@@ -1,11 +1,10 @@
 /**
- * Created by asafam on 30/07/2017.
+ * Created by asafam on 1/3/2019.
  */
 
 'use strict';
 
-import {types} from '../actions';
-import {loadKey} from '../../../services/local-storage';
+import {types} from '../actions/app';
 
 
 const initialState = {
@@ -21,5 +20,5 @@ const pageHeader = (state = initialState, action) => {
             return state;
     }
 };
-//
+
 export default pageHeader;

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getErrors} from '../reducers';
-import * as actions from "../actions";
+import * as actions from "../actions/app";
 
 
 class Errors extends Component {
