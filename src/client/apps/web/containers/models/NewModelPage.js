@@ -4,8 +4,10 @@
 'use strict';
 
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { newModelPageLoaded } from '../../actions/app';
+import { createModel, updateModel } from '../../actions/models';
 import { getOrganization } from '../../reducers';
 
 
@@ -13,10 +15,32 @@ class ModelsPage extends React.Component {
 
     constructor(props, context) {
         super(props, context);
+
+        this.handleSave = this.handleSave.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     componentDidMount() {
         this.props.actions.newModelPageLoaded();
+    }
+
+    handleSave(model) {
+        const { organizationId } = this.props;
+        saveModel = model.id ? this.props.actions.updateModel : this.props.actions.createModel;
+        saveModel(model, organizationId)
+            .then(model => this.props.history.push({
+                pathname: `/models/${model.slug}`,
+                state: {
+                    model
+                }
+            }))
+            .catch(err => {
+                // todo: display save error
+            });
+    }
+
+    handleCancel() {
+        this.props.history.goBack();
     }
 
     render() {
@@ -25,7 +49,7 @@ class ModelsPage extends React.Component {
         return (
             <div className="models-page col-md-12">
                 <h1>Models</h1>
-                <ModelForm model={model} organizationId={organizationId} />
+                <ModelForm model={model} onCancel={this.handelCancel} onSave={this.handleSave} />
             </div>
         );
     }
@@ -45,7 +69,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ modelsPageLoaded }, dispatch)
+        actions: bindActionCreators({ newModelPageLoaded, updateModel, createModel }, dispatch)
     }
 }
 

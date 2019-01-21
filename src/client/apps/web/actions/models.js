@@ -37,7 +37,7 @@ export const fetchModels = (organizationId, page = 0) => (dispatch) => {
         }));
 };
 
-export const fetchModel = (id) => (dispatch) => {
+export const fetchModel = (id, organizationId) => (dispatch) => {
     if (!id) {
         return;
     }
@@ -55,7 +55,7 @@ export const fetchModel = (id) => (dispatch) => {
         }));
 };
 
-export const createModel = (data) => (dispatch) => {
+export const createModel = (data, organizationId) => (dispatch) => {
     if (!data) {
         return;
     }
@@ -73,7 +73,7 @@ export const createModel = (data) => (dispatch) => {
         }));
 };
 
-export const updateModel = (id, data) => (dispatch) => {
+export const updateModel = (id, data, organizationId) => (dispatch) => {
     if (!id || !data) {
         return;
     }

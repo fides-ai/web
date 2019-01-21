@@ -13,10 +13,10 @@ const ModelsList = ({ models, page, fetching, onClick, onClickNew, onClickEdit, 
     return (
         <div className="models-list row">
             <NewModelListItem model={model} onClick={onClickNew} />
+            
             {models && models.map((model, index) =>
                 <ModelsListItem model={model} key={index}
-                    onClick={onClick}
-                    onClickEdit={onClickEdit} />
+                    onClick={onClick} />
             )}
         </div>
     );

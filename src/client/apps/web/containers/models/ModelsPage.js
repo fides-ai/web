@@ -7,6 +7,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import Models from '../../components/models/Models';
 import { modelsPageLoaded } from '../../actions/app';
+import { fetchModels } from '../../actions/models';
 import { getOrganizationId, getModels } from '../../reducers';
 
 
@@ -38,7 +39,7 @@ class ModelsPage extends React.Component {
 
     }
 
-    handleClickEdit() {
+    handleClickEdit(model) {
 
     }
 
@@ -67,7 +68,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ modelsPageLoaded }, dispatch)
+        actions: bindActionCreators({ modelsPageLoaded, fetchModels }, dispatch)
     }
 }
 

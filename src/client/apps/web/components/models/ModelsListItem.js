@@ -12,19 +12,19 @@ const ModelsListItem = ({ model, onClick }) => {
 
     return (
         <div className="models-list-item col-lg-3 col-xs-6">
-          <div className="small-box bg-aqua">
-            <div onClick={() => onClick(id)}>
-                <div className="inner">
-                    <h3>{name}</h3>
+            <div className="small-box bg-aqua">
+                <div onClick={() => onClick(id)}>
+                    <div className="inner">
+                        <h3>{name}</h3>
+                    </div>
+                    <div class="icon">
+                        <i class="fa "></i>
+                    </div>
                 </div>
-                <div class="icon">
-                    <i class="fa "></i>
+                <div class="small-box-footer" onClick={() => onClickEdit(id)}>
+                    Edit <i class="fa fa-cog"></i>
                 </div>
             </div>
-            <div class="small-box-footer" onClick={() => onClickEdit(id)}>
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </div>
-        </div>
         </div>
     );
 };

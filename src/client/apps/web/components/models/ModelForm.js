@@ -34,7 +34,8 @@ class ModelForm extends React.Component {
     handleCancel(event) {
         event.preventDefault();
 
-        // todo: go to previous page
+        const { onCancel } = this.props;
+        onCancel();
     }
 
     handleSave(event) {
@@ -43,13 +44,11 @@ class ModelForm extends React.Component {
         const { onSave } = this.props;
         const { model } = this.state;
         onSave(model);
-
-        // todo: go to saved model page
     }
 
     render() {
         const { model } = this.state;
-        const { name, type, version } = model || {};
+        const { name, description, type, version } = model || {};
 
         return (
             <form className="model-form form-horizontal">
@@ -61,6 +60,15 @@ class ModelForm extends React.Component {
                         <div className="col-sm-10">
                             <input value={name} type="text" className="form-control" id="inputName"
                                 name="name" onChange={this.handleChange} placeholder="Name" />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Description</label>
+
+                        <div className="col-sm-10">
+                            <textarea className="form-control" id="inputText" onChange={this.onChange}
+                                name="description" placeholder="Model description..." value={description}></textarea>
                         </div>
                     </div>
 
@@ -98,11 +106,9 @@ class ModelForm extends React.Component {
 
 ModelForm.propTypes = {
     model: PropTypes.object,
-    keywordsString: PropTypes.string,
-    categories: PropTypes.array,
     fetching: PropTypes.bool,
-    handleAnalyze: PropTypes.func.isRequired,
-    handleAnalyticsEvent: PropTypes.func,
+    onSave: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
 };
 
 export default ModelForm;
