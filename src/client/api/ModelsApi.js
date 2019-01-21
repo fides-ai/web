@@ -7,7 +7,7 @@
 import BaseApi from './BaseApi';
 
 
-class ModelsApi extends BaseApi{
+class ModelsApi extends BaseApi {
 
     fetch(organizationId, page) {
         let params = {
@@ -24,7 +24,7 @@ class ModelsApi extends BaseApi{
             });
     }
 
-    fetchOne(organizationId, id) {
+    fetchOne(id, organizationId) {
         let params = {
             url: `/organizations/${organizationId}/models/${id}`,
             method: 'GET'
@@ -36,7 +36,7 @@ class ModelsApi extends BaseApi{
             });
     }
 
-    create(organizationId, data, options) {
+    create(data, organizationId, options) {
         let params = {
             url: `/organizations/${organizationId}/models`,
             method: 'POST',
@@ -50,13 +50,10 @@ class ModelsApi extends BaseApi{
             });
     }
 
-    update(data, options) {
+    update(id, data, organizationId, options) {
         if (!data) {
             return null;
         }
-
-        const {id, query, keywords} = data;
-        data = {query, keywords}; // work on a copy of the data
 
         let params = {
             url: `/organizations/${organizationId}/models/${id}`,
@@ -69,10 +66,6 @@ class ModelsApi extends BaseApi{
             .catch(error => {
                 throw error;
             });
-    }
-
-    publish(options) {
-
     }
 }
 

@@ -36,11 +36,18 @@ class ModelsPage extends React.Component {
     }
 
     handleClickNew() {
-
+        this.props.history.push({
+            pathname: `/models/new`,
+        });
     }
 
     handleClickEdit(model) {
-
+        this.props.history.push({
+            pathname: `/models//edit/${model.slug}`,
+            state: {
+                model
+            }
+        });
     }
 
     render() {

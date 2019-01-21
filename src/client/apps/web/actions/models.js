@@ -26,7 +26,7 @@ export const types = {
 export const fetchModels = (organizationId, page = 0) => (dispatch) => {
     dispatch({type: MODELS_LIST_REQUEST});
 
-    api.list(organizationId, page)
+    api.fetch(organizationId, page)
         .then(models => dispatch({
             type: types.MODELS_LIST_SUCCESS,
             models
@@ -44,7 +44,7 @@ export const fetchModel = (id, organizationId) => (dispatch) => {
 
     dispatch({type: MODELS_GET_REQUEST, id});
 
-    api.get(id)
+    api.fetchOne(id, organizationId)
         .then(model => dispatch({
             type: types.MODELS_GET_SUCCESS,
             model
@@ -62,7 +62,7 @@ export const createModel = (data, organizationId) => (dispatch) => {
     
     dispatch({type: MODELS_GET_REQUEST, id});
 
-    api.create(data)
+    api.create(data, organizationId)
         .then(model => dispatch({
             type: types.MODELS_GET_SUCCESS,
             model
@@ -80,7 +80,7 @@ export const updateModel = (id, data, organizationId) => (dispatch) => {
 
     dispatch({type: MODELS_UPDATE_REQUEST, id});
 
-    api.update(id, data)
+    api.update(id, data, organizationId)
         .then(model => dispatch({
             type: types.MODELS_GET_SUCCESS,
             model

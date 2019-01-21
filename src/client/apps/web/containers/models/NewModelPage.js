@@ -7,7 +7,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { newModelPageLoaded } from '../../actions/app';
-import { createModel, updateModel } from '../../actions/models';
+import { fetchModel, createModel, updateModel } from '../../actions/models';
 import { getOrganization } from '../../reducers';
 
 
@@ -21,13 +21,26 @@ class ModelsPage extends React.Component {
     }
 
     componentDidMount() {
+        const { id, model, organizationId } = this.props;
+        if (id && !model) {
+            this.props.actions.fetchModel(id, organizationId)
+                .then(model => {
+                    this.setState({ model })
+                })
+                .catch(err => {
+                    // todo!
+                });
+        }
+
         this.props.actions.newModelPageLoaded();
     }
 
     handleSave(model) {
         const { organizationId } = this.props;
-        saveModel = model.id ? this.props.actions.updateModel : this.props.actions.createModel;
-        saveModel(model, organizationId)
+        saveModelPromise = model.id ?
+            this.props.actions.updateModel(model.id, model, organizationId) :
+            this.props.actions.createModel(model, organizationId);
+        saveModelPromise
             .then(model => this.props.history.push({
                 pathname: `/models/${model.slug}`,
                 state: {
@@ -44,7 +57,7 @@ class ModelsPage extends React.Component {
     }
 
     render() {
-        const { organizationId, model } = this.props;
+        const { model } = this.props;
 
         return (
             <div className="models-page col-md-12">
@@ -56,7 +69,8 @@ class ModelsPage extends React.Component {
 }
 
 ModelsPage.propTypes = {
-    model: propTypes.object.isRequired
+    id: propTypes.string,
+    model: propTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => {

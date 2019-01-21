@@ -28,6 +28,7 @@ const Routes = () => (
                             <Route path="/models" component={ModelsPage}/>
                             <Route path="/models/:id" component={ModelPage}/>
                             <Route path="/models/new" component={NewModelPage}/>
+                            <Route path="/models/edit/:id" component={NewModelPage}/>
                             {/* <Route path="/other/page" component={withAnalytics(OtherPage)}/> */}
                         </Switch>
                     </Layout>
