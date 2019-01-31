@@ -5,10 +5,11 @@
 
 import React from 'react';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Models from '../../components/models/Models';
 import { modelsPageLoaded } from '../../actions/app';
 import { fetchModels } from '../../actions/models';
-import { getOrganizationId, getModels } from '../../reducers';
+import { getOrganizationId, getModels, isFetchingModels } from '../../reducers';
 
 
 class ModelsPage extends React.Component {
@@ -51,12 +52,15 @@ class ModelsPage extends React.Component {
     }
 
     render() {
+        const { models, fetching } = this.props;
+
         return (
             <div className="models-page col-md-12">
                 <h1>Models</h1>
                 <Models models={models}
-                    onClick={this.handleClick} 
-                    onClickNew={this.handleClickNew} 
+                    fetching={fetching}
+                    onClick={this.handleClick}
+                    onClickNew={this.handleClickNew}
                     onClickEdit={this.handleClickEdit} />
             </div>
         );
@@ -69,7 +73,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         ...ownProps,
         organizationId: getOrganizationId(state),
-        models: getModels(state)
+        models: getModels(state),
+        fetching: isFetchingModels(state)
     };
 };
 

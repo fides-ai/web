@@ -3,6 +3,7 @@
  */
 'use strict';
 
+import {combineReducers} from 'redux';
 import {types} from '../actions/app';
 
 
@@ -54,7 +55,7 @@ const ids = (state = [], action) => {
     }
 };
 
-const isFetching = (state = false, action) => {
+const fetching = (state = false, action) => {
     switch (action.type) {
         case types.MODELS_CREATE_REQUEST:
         case types.MODELS_GET_REQUEST:
@@ -78,7 +79,7 @@ const isFetching = (state = false, action) => {
 const models = combineReducers({
     byId,
     ids,
-    isFetching
+    fetching
 });
 
 export default models;
@@ -87,10 +88,15 @@ export default models;
 // selectors
 
 export const getModels = (state, organizationId) => {
-    let models = state.values.filter(model => model.organizationId === organizationId));
+    let models = state && state.ids && state.ids.filter(model => model.organizationId === organizationId) || [];
     return models;
 }
 
 export const getModel = (state, organizationId, id) =>  {
-    return state[id] && state[id].organizationId === organizationId ? state[id] : null;
+    const model = state && state.byId[id]
+    return model && model.organizationId === organizationId ? model : null;
+}
+
+export const isFetching = (state) => {
+    return state.fetching;
 }

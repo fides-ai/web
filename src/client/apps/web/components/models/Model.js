@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import * as modelsActions from '../actions';
 import * as errorActions from '../../errors/actions';
 import { getModel, getIsFetchingModel } from '../reducers';
-import '../stylesheets/Models.scss';
+import '../../stylesheets/Models.scss';
 
 
 const Model = ({ model, modelStats, fetching, onEdit }) => {

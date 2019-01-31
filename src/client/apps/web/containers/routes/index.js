@@ -11,8 +11,8 @@ import Layout from '../common/Layout';
 import ModelsPage from '../models/ModelsPage';
 import ModelPage from '../models/ModelPage';
 import NewModelPage from '../models/NewModelPage';
-import AnalyticsRouteTracker from '../../../../common/analytics/AnalyticsRouteTracker';
-import {withAnalytics} from "../../../../common/analytics/AnalyticsContext";
+import AnalyticsRouteTracker from '../../containers/analytics/AnalyticsRouteTracker';
+import {withAnalytics} from '../../containers/analytics/AnalyticsContext';
 
 
 const Routes = () => (

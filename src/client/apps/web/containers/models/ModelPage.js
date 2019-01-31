@@ -4,7 +4,9 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { modelPageLoaded } from '../../actions/app';
 import { getOrganizationId, getModel } from '../../reducers';
 
@@ -32,7 +34,7 @@ class ModelPage extends React.Component {
 }
 
 ModelPage.propTypes = {
-    id: propTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {

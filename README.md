@@ -10,6 +10,7 @@ Go through the following steps:
 1. `npm install`
 1. `npm update`
 1. `npm install -g webpack webpack-cli`
+1. Set environment variables: `export NODE_ENV=development PORT=3030`
 
 ## Running the environments
 

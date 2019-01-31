@@ -4,8 +4,10 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { newModelPageLoaded } from '../../actions/app';
 import { fetchModel, createModel, updateModel } from '../../actions/models';
 import { getOrganization } from '../../reducers';
@@ -69,8 +71,8 @@ class ModelsPage extends React.Component {
 }
 
 ModelsPage.propTypes = {
-    id: propTypes.string,
-    model: propTypes.object,
+    id: PropTypes.string,
+    model: PropTypes.object,
 };
 
 const mapStateToProps = (state, ownProps) => {

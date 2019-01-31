@@ -4,8 +4,9 @@
 
 'use strict';
 
-import ModelsList from '../components/ModelsList';
-import '../stylesheets/Models.scss';
+import React from 'react';
+import ModelsList from './ModelsList';
+import '../../stylesheets/Models.scss';
 
 
 const Models = ({ models, fetching, page, onClick, onClickNew, onClickEdit }) => {
