@@ -10,7 +10,7 @@ import Routes from './routes';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {appLoaded} from "../actions/app";
-import {withAnalytics} from "../../../common/analytics/AnalyticsContext";
+import {withAnalytics} from '../containers/analytics/AnalyticsContext';
 import 'admin-lte/dist/js/adminlte.min';
 
 

@@ -4,7 +4,7 @@
 'use strict';
 
 import React from 'react';
-import {firePageTracking} from "../../services/analytics";
+import {firePageTracking} from '../../../../services/analytics';
 
 class AnalyticsRouteTracker extends React.Component {
 

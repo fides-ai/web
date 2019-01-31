@@ -69,4 +69,4 @@ class ModelsApi extends BaseApi {
     }
 }
 
-export default ConetntAnalysesApi;
+export default ModelsApi;

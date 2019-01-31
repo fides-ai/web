@@ -5,6 +5,8 @@
 'use strict';
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import Header from '../../components/common/Header';
 import Sidebar from '../../components/common/Sidebar';
@@ -25,7 +27,6 @@ class Layout extends React.Component {
 
     handleLogout(event) {
         event.preventDefault();
-
         this.props.actions.logout();
     }
 
@@ -37,8 +38,6 @@ class Layout extends React.Component {
                 {/*Main Header*/}
                 <Header user={user} />
 
-                {/*Left side column. contains the logo and sidebar*/}
-                <Sidebar />
                 {/*Content Wrapper. Contains page content*/}
                 <Content>
 
@@ -50,7 +49,7 @@ class Layout extends React.Component {
                 <Footer />
 
                 {/*Control Sidebar*/}
-                <Aside user={user} onLogout={this.handleLogout} />
+                {/* <Aside user={user} onLogout={this.handleLogout} /> */}
             </div>
         )
     }

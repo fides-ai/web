@@ -15,7 +15,7 @@ Go through the following steps:
 
 #### Develop
 To run the environment in an hot reload configuration execute the following command:
-1. `npm start` will start the server
+1. `npm run server` will start the server
 2. `npm run watch` (on another terminal window) will watch the code files for changes, and rebuild the environment 
 automatically. 
 3. Browse to `http://localhost:3030`

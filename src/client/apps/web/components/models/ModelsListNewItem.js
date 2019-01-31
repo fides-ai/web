@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 
 const ModelsListNewItem = ({ model, onClick }) => {
-    const { id, name } = model;
+    const { id, name } = model || {};
 
     return (
         <div className="models-list-new-item col-lg-3 col-xs-6">

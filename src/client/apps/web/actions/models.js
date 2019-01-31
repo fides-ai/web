@@ -24,7 +24,7 @@ export const types = {
 };
 
 export const fetchModels = (organizationId, page = 0) => (dispatch) => {
-    dispatch({type: MODELS_LIST_REQUEST});
+    dispatch({type: types.MODELS_LIST_REQUEST});
 
     api.fetch(organizationId, page)
         .then(models => dispatch({
@@ -42,7 +42,7 @@ export const fetchModel = (id, organizationId) => (dispatch) => {
         return;
     }
 
-    dispatch({type: MODELS_GET_REQUEST, id});
+    dispatch({type: types.MODELS_GET_REQUEST, id});
 
     api.fetchOne(id, organizationId)
         .then(model => dispatch({
@@ -60,7 +60,7 @@ export const createModel = (data, organizationId) => (dispatch) => {
         return;
     }
     
-    dispatch({type: MODELS_GET_REQUEST, id});
+    dispatch({type: types.MODELS_GET_REQUEST, id});
 
     api.create(data, organizationId)
         .then(model => dispatch({
@@ -78,7 +78,7 @@ export const updateModel = (id, data, organizationId) => (dispatch) => {
         return;
     }
 
-    dispatch({type: MODELS_UPDATE_REQUEST, id});
+    dispatch({type: types.MODELS_UPDATE_REQUEST, id});
 
     api.update(id, data, organizationId)
         .then(model => dispatch({
