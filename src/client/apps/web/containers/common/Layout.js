@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import Header from '../../components/common/Header';
+import HeaderTopNavigation from '../../components/common/HeaderTopNavigation'
 import Sidebar from '../../components/common/Sidebar';
 import Content from '../../components/common/Content';
 import Footer from '../../components/common/Footer';
@@ -31,12 +32,18 @@ class Layout extends React.Component {
     }
 
     render() {
-        const { user } = this.props;
+        const { user, topNavigation } = this.props;
 
         return (
-            <div className="wrapper">
-                {/*Main Header*/}
-                <Header user={user} />
+            <div className="wrapper" style={{height: "auto", minheight: "100%"}}>
+                {/* Main Header */}
+                {topNavigation ?
+                    (<HeaderTopNavigation user={user} />) :
+                    (<Header user={user} />)
+                }
+
+                {/*Left side column. contains the logo and sidebar*/}
+                {!topNavigation && <Sidebar />}
 
                 {/*Content Wrapper. Contains page content*/}
                 <Content>
@@ -57,6 +64,7 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
     children: PropTypes.object,
+    topNavigation: PropTypes.bool,
 };
 
 const mapStateToProps = (state, ownProps) => {
