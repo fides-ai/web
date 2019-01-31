@@ -22,7 +22,7 @@ const Routes = () => (
             <Switch>
                 {/* <Route path="/login" component={LoginPage}/> */}
                 <SecuredRoute exact path="/" render={() => (
-                    <Layout>
+                    <Layout topNavigation={true}>
                         <Switch>
                             <Route path="/" component={ModelsPage}/>
                             <Route path="/models" component={ModelsPage}/>
