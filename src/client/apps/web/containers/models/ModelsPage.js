@@ -7,7 +7,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Models from '../../components/models/Models';
-import { modelsPageLoaded } from '../../actions/app';
+import { pages, pageLoaded } from '../../actions/app';
 import { fetchModels } from '../../actions/models';
 import { getOrganizationId, getModels, isFetchingModels } from '../../reducers';
 
@@ -23,7 +23,7 @@ class ModelsPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.actions.modelsPageLoaded();
+        this.props.actions.pageLoaded(pages.MODELS_PAGE);
         this.fetchData();
     }
 
@@ -80,7 +80,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ modelsPageLoaded, fetchModels }, dispatch)
+        actions: bindActionCreators({ pageLoaded, fetchModels }, dispatch)
     }
 }
 

@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { modelPageLoaded } from '../../actions/app';
+import { pages, pageLoaded } from '../../actions/app';
 import { getOrganizationId, getModel } from '../../reducers';
 
 
@@ -18,7 +18,7 @@ class ModelPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.actions.modelPageLoaded();
+        this.props.actions.pageLoaded(pages.MODEL_PAGE);
     }
 
     render() {
@@ -49,7 +49,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ modelPageLoaded }, dispatch)
+        actions: bindActionCreators({ pageLoaded }, dispatch)
     }
 }
 

@@ -9,7 +9,7 @@ import BaseApi from './BaseApi';
 
 class ModelsApi extends BaseApi {
 
-    fetch(page) {
+    fetchModels(page) {
         let params = {
             url: `/demo/models/`,
             method: 'GET',
@@ -39,10 +39,14 @@ class ModelsApi extends BaseApi {
             });
     }
 
-    explain(modelId, predictionId) {
+    explain(modelId, predictionId, options) {
         let params = {
             url: `/demo/models/${modelId}/prediction`,
-            method: 'POST'
+            method: 'POST',
+            options, 
+            data: {
+                predictionId
+            }
         };
         return this.request(params)
             .then(response => response.data)

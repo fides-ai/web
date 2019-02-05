@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { newModelPageLoaded } from '../../actions/app';
+import { pages, pageLoaded } from '../../actions/app';
 import { fetchModel, createModel, updateModel } from '../../actions/models';
 import { getOrganization } from '../../reducers';
 
@@ -34,7 +34,7 @@ class ModelsPage extends React.Component {
                 });
         }
 
-        this.props.actions.newModelPageLoaded();
+        this.props.actions.pageLoaded(pages.NEW_MODEL_PAGE);
     }
 
     handleSave(model) {
@@ -85,7 +85,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ newModelPageLoaded, updateModel, createModel }, dispatch)
+        actions: bindActionCreators({ pageLoaded, updateModel, createModel }, dispatch)
     }
 }
 

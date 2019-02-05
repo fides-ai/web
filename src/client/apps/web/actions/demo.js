@@ -3,90 +3,65 @@
  */
 'use strict';
 
-import ModelsApi from '../../../api/ModelsApi';
+import DemoApi from '../../../api/DemoApi';
 
 
-const api = new ModelsApi();
+const api = new DemoApi();
 
 export const types = {
-    MODELS_GET_REQUEST: 'MODELS_GET_REQUEST',
-    MODELS_GET_SUCCESS: 'MODELS_GET_SUCCESS',
-    MODELS_GET_FAILURE: 'MODELS_GET_FAILURE',
-    MODELS_LIST_REQUEST: 'MODELS_LIST_REQUEST',
-    MODELS_LIST_SUCCESS: 'MODELS_LIST_SUCCESS',
-    MODELS_LIST_FAILURE: 'MODELS_LIST_FAILURE',
-    MODELS_CREATE_REQUEST: 'MODELS_CREATE_REQUEST',
-    MODELS_CREATE_SUCCESS: 'MODELS_CREATE_SUCCESS',
-    MODELS_CREATE_FAILURE: 'MODELS_CREATE_FAILURE',
-    MODELS_UPDATE_REQUEST: 'MODELS_UPDATE_REQUEST',
-    MODELS_UPDATE_SUCCESS: 'MODELS_UPDATE_SUCCESS',
-    MODELS_UPDATE_FAILURE: 'MODELS_UPDATE_FAILURE',
+    DEMO_MODELS_LIST_REQUEST: 'DEMO_MODELS_LIST_REQUEST',
+    DEMO_MODELS_LIST_SUCCESS: 'DEMO_MODELS_LIST_SUCCESS',
+    DEMO_MODELS_LIST_FAILURE: 'DEMO_MODELS_LIST_FAILURE',
+    DEMO_MODEL_DATA_LIST_REQUEST: 'DEMO_MODEL_DATA_LIST_REQUEST',
+    DEMO_MODEL_DATA_LIST_SUCCESS: 'DEMO_MODEL_DATA_LIST_SUCCESS',
+    DEMO_MODEL_DATA_LIST_FAILURE: 'DEMO_MODEL_DATA_LIST_FAILURE',
+    DEMO_MODEL_DATA_EXPLAIN_REQUEST: 'DEMO_MODEL_DATA_EXPLAIN_REQUEST',
+    DEMO_MODEL_DATA_EXPLAIN_SUCCESS: 'DEMO_MODEL_DATA_EXPLAIN_SUCCESS',
+    DEMO_MODEL_DATA_EXPLAIN_FAILURE: 'DEMO_MODEL_DATA_EXPLAIN_FAILURE',
 };
 
-export const fetchModels = (organizationId, page = 0) => (dispatch) => {
-    dispatch({type: types.MODELS_LIST_REQUEST});
+export const fetchDemoModels = (page = 0) => (dispatch) => {
+    dispatch({ type: types.DEMO_MODELS_LIST_REQUEST });
 
-    api.fetch(organizationId, page)
+    api.fetchModels(page)
         .then(models => dispatch({
-            type: types.MODELS_LIST_SUCCESS,
+            type: types.DEMO_MODELS_LIST_SUCCESS,
             models
         }))
         .catch(error => dispatch({
-            type: types.MODELS_LIST_FAILURE,
+            type: types.DEMO_MODELS_LIST_FAILURE,
             error
         }));
 };
 
-export const fetchModel = (id, organizationId) => (dispatch) => {
-    if (!id) {
+export const fetchDemoModelData = (modelId, page = 0) => (dispatch) => {
+    if (!modelId) {
         return;
     }
 
-    dispatch({type: types.MODELS_GET_REQUEST, id});
+    dispatch({ type: types.DEMO_MODEL_DATA_LIST_REQUEST, modelId });
 
-    api.fetchOne(id, organizationId)
-        .then(model => dispatch({
-            type: types.MODELS_GET_SUCCESS,
-            model
+    api.fetchModelData(modelId, page)
+        .then(data => dispatch({
+            type: types.DEMO_MODEL_DATA_LIST_SUCCESS,
+            data
         }))
         .catch(error => dispatch({
-            type: types.MODELS_GET_FAILURE,
+            type: types.DEMO_MODEL_DATA_LIST_FAILURE,
             error
         }));
 };
 
-export const createModel = (data, organizationId) => (dispatch) => {
-    if (!data) {
-        return;
-    }
-    
-    dispatch({type: types.MODELS_GET_REQUEST, id});
+export const explainModelData = (modelId, data) => (dispatch) => {
+    dispatch({ type: types.DEMO_MODEL_DATA_EXPLAIN_REQUEST, modelId });
 
-    api.create(data, organizationId)
-        .then(model => dispatch({
-            type: types.MODELS_GET_SUCCESS,
-            model
+    api.explain(modelId, data)
+        .then(explanation => dispatch({
+            type: types.DEMO_MODEL_DATA_EXPLAIN_SUCCESS,
+            explanation
         }))
         .catch(error => dispatch({
-            type: types.MODELS_GET_FAILURE,
-            error
-        }));
-};
-
-export const updateModel = (id, data, organizationId) => (dispatch) => {
-    if (!id || !data) {
-        return;
-    }
-
-    dispatch({type: types.MODELS_UPDATE_REQUEST, id});
-
-    api.update(id, data, organizationId)
-        .then(model => dispatch({
-            type: types.MODELS_GET_SUCCESS,
-            model
-        }))
-        .catch(error => dispatch({
-            type: types.MODELS_GET_FAILURE,
+            type: types.DEMO_MODEL_DATA_EXPLAIN_FAILURE,
             error
         }));
 };
