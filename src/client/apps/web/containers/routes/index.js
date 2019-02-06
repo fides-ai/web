@@ -11,6 +11,7 @@ import Layout from '../common/Layout';
 import ModelsPage from '../models/ModelsPage';
 import ModelPage from '../models/ModelPage';
 import NewModelPage from '../models/NewModelPage';
+import DemoPage from '../demo/DemoPage';
 import AnalyticsRouteTracker from '../../containers/analytics/AnalyticsRouteTracker';
 import {withAnalytics} from '../../containers/analytics/AnalyticsContext';
 
@@ -24,7 +25,7 @@ const Routes = () => (
                 <SecuredRoute exact path="/" render={() => (
                     <Layout topNavigation={true}>
                         <Switch>
-                            <Route path="/" component={ModelsPage}/>
+                            <Route path="/" component={DemoPage}/>
                             <Route path="/models" component={ModelsPage}/>
                             <Route path="/models/:id" component={ModelPage}/>
                             <Route path="/models/new" component={NewModelPage}/>

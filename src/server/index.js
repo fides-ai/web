@@ -28,7 +28,7 @@ app.get('*', (request, response) => {
 });
 
 //listen on port
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3080;
 app.listen(port, () => {
     console.log(`Server listens on port ${port}`);
 });

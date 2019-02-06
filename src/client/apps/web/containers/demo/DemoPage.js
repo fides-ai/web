@@ -4,9 +4,12 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import DemoWizard from '../../components/demo/DemoWizard';
 import { pages, pageLoaded } from '../../actions/app';
-import { fetchDemoModels, fetchDemoModelData, explainModelData } from '../../actions/demo';
+import { fetchDemoModels, fetchDemoModelData, explainModelData } from '../../actions/models';
 
 
 class DemoPage extends React.Component {
@@ -20,7 +23,12 @@ class DemoPage extends React.Component {
 
     componentDidMount() {
         this.props.actions.pageLoaded(pages.DEMO_PAGE);
-        this.props.actions.fetchDemoModels();
+        this.fetchData();
+    }
+
+    fetchData() {
+        const { organizationId } = this.props;
+        this.props.actions.fetchModels(organizationId);
     }
 
     handleSelectModel(model) {

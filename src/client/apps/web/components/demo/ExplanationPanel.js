@@ -21,4 +21,4 @@ ExplanationPanel.propTypes = {
     fetching: PropTypes.bool,
 };
 
-export default ModelsForm;
+export default ExplanationPanel;

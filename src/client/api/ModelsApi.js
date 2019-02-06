@@ -9,13 +9,11 @@ import BaseApi from './BaseApi';
 
 class ModelsApi extends BaseApi {
 
-    fetch(organizationId, page) {
+    fetch(organizationId, options) {
         let params = {
             url: `/organizations/${organizationId}/models`,
             method: 'GET',
-            params: {
-                page
-            }
+            params: options
         };
         return this.request(params)
             .then(response => response.data)
@@ -24,9 +22,22 @@ class ModelsApi extends BaseApi {
             });
     }
 
-    fetchOne(id, organizationId) {
+    fetchOne(id, organizationId, options) {
         let params = {
             url: `/organizations/${organizationId}/models/${id}`,
+            method: 'GET',
+            params: options
+        };
+        return this.request(params)
+            .then(response => response.data)
+            .catch(error => {
+                throw error;
+            });
+    }
+
+    fetchModelData(id, organizationId) {
+        let params = {
+            url: `/organizations/${organizationId}/models/${id}/data`,
             method: 'GET'
         };
         return this.request(params)
@@ -60,6 +71,22 @@ class ModelsApi extends BaseApi {
             method: 'PUT',
             params: options,
             data
+        };
+        return this.request(params)
+            .then(response => response.data)
+            .catch(error => {
+                throw error;
+            });
+    }
+    
+    explain(id, data, organizationId,options) {
+        let params = {
+            url: `/organizations/${organizationId}/models/${id}/explain`,
+            method: 'POST',
+            options,
+            data: {
+                data
+            }
         };
         return this.request(params)
             .then(response => response.data)

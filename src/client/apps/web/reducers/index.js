@@ -34,4 +34,6 @@ export const getModel = (state) => fromModel.getModel(state.models);
 
 export const getModels = (state) => fromModel.getModels(state.models);
 
-export const isFetchingModels = (state) => fromModel.isFetching(state.models)
+export const getModelData = (state) => fromModel.getModelData(state.models);
+
+export const getModelDataExplanation = (state) => fromModel.getModelDataExplanation(state.models);

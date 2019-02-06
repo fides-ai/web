@@ -3,8 +3,8 @@
  */
 'use strict';
 
-import {combineReducers} from 'redux';
-import {types} from '../actions/app';
+import { combineReducers } from 'redux';
+import { types } from '../actions/models';
 
 
 // reducers
@@ -12,7 +12,7 @@ import {types} from '../actions/app';
 const byId = (state = {}, action) => {
     switch (action.type) {
         case types.MODELS_LIST_SUCCESS:
-            const nextState = {...state}; //shallow copy of state
+            const nextState = { ...state }; //shallow copy of state
             action.models.forEach(model => {
                 nextState[model.id] = model;
             });
@@ -55,31 +55,60 @@ const ids = (state = [], action) => {
     }
 };
 
-const fetching = (state = false, action) => {
+const data = (state = [], action) => {
+
+};
+
+const fetching = (state = {}, action) => {
     switch (action.type) {
+        case types.MODELS_LIST_REQUEST:
+
         case types.MODELS_CREATE_REQUEST:
         case types.MODELS_GET_REQUEST:
-        case types.MODELS_LIST_REQUEST:
         case types.MODELS_UPDATE_REQUEST:
-            return true;
+            const nextState = { ...state };
+            return nextState[action.model.id] = true;
+        case types.MODELS_LIST_SUCCESS:
+        case types.MODELS_LIST_FAILURE:
+
         case types.MODELS_CREATE_SUCCESS:
         case types.MODELS_CREATE_FAILURE:
         case types.MODELS_GET_SUCCESS:
         case types.MODELS_GET_FAILURE:
-        case types.MODELS_LIST_SUCCESS:
-        case types.MODELS_LIST_FAILURE:
         case types.MODELS_UPDATE_SUCCESS:
         case types.MODELS_UPDATE_FAILURE:
-            return false;
+            const nextState = { ...state };
+            return nextState[action.model.id] = false;
         default:
             return state;
+    }
+};
+
+const fetchingById = (state, action) => {
+    switch (action.type) {
+        case types.MODELS_CREATE_REQUEST:
+        case types.MODELS_GET_REQUEST:
+        case types.MODELS_UPDATE_REQUEST:
+            const nextState = { ...state };
+            return nextState[action.model.id] = true;
+        case types.MODELS_CREATE_SUCCESS:
+        case types.MODELS_CREATE_FAILURE:
+        case types.MODELS_GET_SUCCESS:
+        case types.MODELS_GET_FAILURE:
+        case types.MODELS_UPDATE_SUCCESS:
+        case types.MODELS_UPDATE_FAILURE:
+            const nextState = { ...state };
+            return nextState[action.model.id] = false;
+        default:
+            return state
     }
 };
 
 const models = combineReducers({
     byId,
     ids,
-    fetching
+    data,
+    fetchingById
 });
 
 export default models;
@@ -92,7 +121,12 @@ export const getModels = (state, organizationId) => {
     return models;
 }
 
-export const getModel = (state, organizationId, id) =>  {
+export const getModel = (state, organizationId, id) => {
+    const model = state && state.byId[id]
+    return model && model.organizationId === organizationId ? model : null;
+}
+
+export const getModelData = (state, organizationId, id) => {
     const model = state && state.byId[id]
     return model && model.organizationId === organizationId ? model : null;
 }

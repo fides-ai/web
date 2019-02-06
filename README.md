@@ -10,7 +10,7 @@ Go through the following steps:
 1. `npm install`
 1. `npm update`
 1. `npm install -g webpack webpack-cli`
-1. Set environment variables: `export NODE_ENV=development PORT=3030`
+1. Set environment variables: `export NODE_ENV=development`
 
 ## Running the environments
 
@@ -19,7 +19,7 @@ To run the environment in an hot reload configuration execute the following comm
 1. `npm start` will start the server
 2. `npm run watch` (on another terminal window) will watch the code files for changes, and rebuild the environment 
 automatically. 
-3. Browse to `http://localhost:3030`
+3. Browse to `http://localhost:3080`
 
 ### Build
 
