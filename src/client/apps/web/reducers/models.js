@@ -55,42 +55,38 @@ const ids = (state = [], action) => {
     }
 };
 
-const data = (state = [], action) => {
-
+const dataById = (state = {}, action) => {
+    switch (action.type) {
+        case MODELS_DATA_LIST_SUCCESS: 
+            const { modelId, data } = action;
+            const nextState = { ...state };
+            nextState[modelId] = data;
+            return nextState;
+        default: 
+            return state;
+    }
 };
 
 const fetching = (state = {}, action) => {
     switch (action.type) {
         case types.MODELS_LIST_REQUEST:
-
-        case types.MODELS_CREATE_REQUEST:
-        case types.MODELS_GET_REQUEST:
-        case types.MODELS_UPDATE_REQUEST:
-            const nextState = { ...state };
-            return nextState[action.model.id] = true;
+            return true;
         case types.MODELS_LIST_SUCCESS:
         case types.MODELS_LIST_FAILURE:
-
-        case types.MODELS_CREATE_SUCCESS:
-        case types.MODELS_CREATE_FAILURE:
-        case types.MODELS_GET_SUCCESS:
-        case types.MODELS_GET_FAILURE:
-        case types.MODELS_UPDATE_SUCCESS:
-        case types.MODELS_UPDATE_FAILURE:
-            const nextState = { ...state };
-            return nextState[action.model.id] = false;
+            return false;
         default:
             return state;
     }
 };
 
-const fetchingById = (state, action) => {
+const fetchingById = (state = {}, action) => {
     switch (action.type) {
         case types.MODELS_CREATE_REQUEST:
         case types.MODELS_GET_REQUEST:
         case types.MODELS_UPDATE_REQUEST:
             const nextState = { ...state };
-            return nextState[action.model.id] = true;
+            nextState[action.model.id] = true;
+            return nextState;
         case types.MODELS_CREATE_SUCCESS:
         case types.MODELS_CREATE_FAILURE:
         case types.MODELS_GET_SUCCESS:
@@ -98,9 +94,22 @@ const fetchingById = (state, action) => {
         case types.MODELS_UPDATE_SUCCESS:
         case types.MODELS_UPDATE_FAILURE:
             const nextState = { ...state };
-            return nextState[action.model.id] = false;
+            nextState[action.model.id] = false;
+            return nextState;
         default:
-            return state
+            return state;
+    }
+};
+
+const fetchData = (state, action) => {
+    switch (action.type) {
+        case MODELS_DATA_LIST_REQUEST: 
+            return true;
+        case MODELS_DATA_LIST_SUCCESS: 
+        case MODELS_DATA_LIST_FAILURE: 
+            return false;
+        default: 
+            return state;
     }
 };
 
@@ -108,7 +117,8 @@ const models = combineReducers({
     byId,
     ids,
     data,
-    fetchingById
+    fetchingById,
+    fetchData
 });
 
 export default models;
@@ -134,3 +144,5 @@ export const getModelData = (state, organizationId, id) => {
 export const isFetching = (state) => {
     return state.fetching;
 }
+
+export const isFetchingData = (state) => state.fetchData;

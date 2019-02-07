@@ -61,20 +61,22 @@ export const fetchModel = (id, organizationId, options) => (dispatch) => {
         }));
 };
 
-export const fetchModelData = (id, organizationId, options) => (dispatch) => {
-    if (!id) {
+export const fetchModelData = (modelId, organizationId, options) => (dispatch) => {
+    if (!modelId) {
         return;
     }
 
-    dispatch({type: types.MODELS_DATA_LIST_REQUEST, id});
+    dispatch({type: types.MODELS_DATA_LIST_REQUEST, modelId});
 
-    api.fetchModelData(id, organizationId, options)
-        .then(model => dispatch({
+    api.fetchModelData(modelId, organizationId, options)
+        .then(data => dispatch({
             type: types.MODELS_DATA_LIST_SUCCESS,
-            model
+            data,
+            modelId
         }))
         .catch(error => dispatch({
             type: types.MODELS_DATA_LIST_FAILURE,
+            modelId,
             error
         }));
 };
