@@ -7,9 +7,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as Promise from 'bluebird';
 import DemoWizard from '../../components/demo/DemoWizard';
 import { pages, pageLoaded } from '../../actions/app';
-import { fetchDemoModels, fetchDemoModelData, explainModelData } from '../../actions/models';
+import * as modelsActions from '../../actions/models';
+import { getModels, getModelData, getModelDataExplanation, } from '../../reducers';
+import { getOrganizationId } from '../../reducers/organization';
+import { getModel } from '../../reducers/models';
+
+
+const DEMO_ORG_ID = 0;
 
 
 class DemoPage extends React.Component {
@@ -19,32 +26,49 @@ class DemoPage extends React.Component {
 
         this.handleSelectModel = this.handleSelectModel.bind(this);
         this.handleSelectData = this.handleSelectData.bind(this);
+
+        const { mid, did } = props;
+        this.state = {
+            selectedModelId: mid,
+            selectedDataId: did
+        };
     }
 
     componentDidMount() {
         this.props.actions.pageLoaded(pages.DEMO_PAGE);
-        this.fetchData();
-    }
 
-    fetchData() {
         const { organizationId } = this.props;
-        this.props.actions.fetchModels(organizationId);
+        Promise.all([
+            this.props.actions.fetchModels(DEMO_ORG_ID),
+            this.props.actions.fetchModels(organizationId)
+        ]);
     }
 
     handleSelectModel(model) {
+        this.setState({
+            selectedModel: model,
+            selectedModelId: model.id
+        });
+
         if (model) {
-            this.props.actions.fetchDemoModelData(model.id);
+            this.props.actions.fetchModelDataset(model.id);
         }
     }
 
     handleSelectData(model, data) {
+        this.setState({
+            selectedData: data,
+            selectedDataId: data.id
+        });
+
         if (model && data) {
-            this.props.actions.explainModelData(model.id, data)
+            this.props.actions.explainModelData(model, data);
         }
     }
 
     render() {
-        const { models, data, explanation, selectedModel, selectedData, fetchingModels, fetchingData, fetchingExplanation } = this.props;
+        const { models, data, explanation, fetchingModels, fetchingData, fetchingExplanation } = this.props;
+        const { selectedModel, selectedData } = this.state;
         return (
             <div className="wizard-page row">
                 <div className="col-md-12">
@@ -66,25 +90,34 @@ class DemoPage extends React.Component {
 }
 
 DemoPage.propTypes = {
-    selectedModelId: PropTypes.string,
-    selectedDataId: PropTypes.string,
+    mid: PropTypes.string, // model id
+    did: PropTypes.string, // data id
 };
 
 const mapStateToProps = (state, ownProps) => {
-    return {
+    let { selectedModel, selectedModelId, selectedData, selectedDataId } = state;
+    const organizationId = getOrganizationId(state);
+    const models = getModels(state, organizationId).concat(getModels(state, DEMO_ORG_ID));
+    selectedModel = selectedModel || getModel(state, selectedModelId);
+    const dataset = getModelDataset(state, selectedModel.id);
+    selectedData = selectedData || ;
+    const explanation = getModelDataExplanation(state, selectedModel.id, selectedData);
+    const nextState = {
         ...ownProps,
-        models: getDemoModels(state),
-        data: getDemoModelData(state),
-        explanation: getModelDataExplanation(state),
-        fetchingModels: isFetchingDemoModels(state),
-        fetchingData: isFetchingDemoModelData(state),
-        fetchingExplanation: isFetchingExplanation(state),
+        organizationId,
+        models,
+        dataset,
+        explanation,
+        fetchingModels: isFetchingModels(state),
+        fetchingData: isFetchingModelData(state, selectedModelId),
+        fetchingExplanation: isFetchingModelDataExplanation(state, selectedModelId),
     };
+    return nextState;
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators({ pageLoaded, fetchDemoModels, fetchDemoModelData, explainModelData }, dispatch)
+        actions: bindActionCreators({ pageLoaded, ...modelsActions }, dispatch)
     }
 }
 

@@ -6,19 +6,19 @@
 import PropTypes from 'prop-types';
 
 
-const ModelDataForm = ({ data, selectedData, onSelect, fetching }) => {
+const ModelDatasetForm = ({ dataset, selectedData, onSelect, fetching }) => {
     return (
         <div className="model-data-form">
-            <h3>Model data form content here</h3>
+            <h3>Model dataset form content here</h3>
         </div>
     );
 };
 
-ModelDataForm.propTypes = {
-    data: PropTypes.array,
+ModelDatasetForm.propTypes = {
+    dataset: PropTypes.array,
     selectedData: PropTypes.object,
     onSelect: PropTypes.func.isRequired,
     fetching: PropTypes.bool,
 }
 
-export default ModelDataForm;
+export default ModelDatasetForm;

@@ -3,16 +3,46 @@
  */
 'use strict';
 
+import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const ModelsForm = ({ models, selectedModel, onSelect, fetching }) => {
-    return (
-        <div className="models-form">
-            <h3>Models form content here</h3>
-        </div>
-    );
-};
+class ModelsForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onSelect = this.onSelect.bind(this);
+
+        const { selectedModel } = props;
+        this.state = {
+            selectedModel
+        };
+    }
+
+    onSelect(event) {
+        event.preventDefault();
+
+        const selectedModelId = event.target.id;
+        const { models, onSelect } = this.props;
+        selectedModel = models.find(m => m.id === selectedModelId)
+
+        this.setState({ selectedModel });
+
+        onSelect(model);
+    }
+
+    render() {
+        const { models, onSelect, fetching } = this.props;
+        const { selectedModel } = this.state;
+
+        return (
+            <div className="models-form">
+                <h3>Models form content here</h3>
+            </div>
+        );
+    }
+}
 
 ModelsForm.propTypes = {
     models: PropTypes.array,

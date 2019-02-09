@@ -30,10 +30,18 @@ export const getUser = (state) => fromAuthentication.getUser(state.authenticatio
 
 export const getOrganizationId = (state) => fromOrganization.getOrganizationId(state.organization);
 
-export const getModel = (state) => fromModel.getModel(state.models);
+export const getModel = (state, organizationId, modelId) => fromModel.getModel(state.models, organizationId, modelId);
 
-export const getModels = (state) => fromModel.getModels(state.models);
+export const getModels = (state, organizationId) => fromModel.getModels(state.models, organizationId);
 
-export const getModelData = (state) => fromModel.getModelData(state.models);
+export const getModelDataset = (state) => fromModel.getModelDataset(state.models);
 
-export const getModelDataExplanation = (state) => fromModel.getModelDataExplanation(state.models);
+export const getModelDataExplanation = (state, model, data) => fromModel.getModelDataExplanation(state.models, model, data);
+
+export const isFetchingModels = (state) => fromModel.isFetching(state.models);
+
+export const isFetchingModel = (state, id) => fromModel.isFetchingModel(state.models, id);
+
+export const isFetchingModelData = (state, id) => fromModel.isFetchingData(state.models);
+
+export const isFetchingModelDataExplanation = (state, id) => fromModel.isFetchingExplanation(state.models, id);

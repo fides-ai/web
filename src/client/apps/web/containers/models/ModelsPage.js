@@ -70,10 +70,12 @@ class ModelsPage extends React.Component {
 ModelsPage.propTypes = {};
 
 const mapStateToProps = (state, ownProps) => {
+    const organizationId = getOrganizationId(state);
+    const models = getModels(state, organizationId);
     return {
         ...ownProps,
-        organizationId: getOrganizationId(state),
-        models: getModels(state),
+        organizationId,
+        models,
         fetching: isFetchingModels(state)
     };
 };

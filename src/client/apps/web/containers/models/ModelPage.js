@@ -27,7 +27,7 @@ class ModelPage extends React.Component {
         return (
             <div className="model-page col-md-12">
                 <h1>Models</h1>
-                <Model model={model}/>
+                <Model model={model} />
             </div>
         );
     }
@@ -38,8 +38,9 @@ ModelPage.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const model = getModel(state);
     const organizationId = getOrganizationId(state);
+    const { id } = ownProps;
+    const model = getModel(state, id);
     return {
         ...ownProps,
         model,

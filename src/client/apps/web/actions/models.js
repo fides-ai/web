@@ -15,6 +15,9 @@ export const types = {
     MODELS_LIST_REQUEST: 'MODELS_LIST_REQUEST',
     MODELS_LIST_SUCCESS: 'MODELS_LIST_SUCCESS',
     MODELS_LIST_FAILURE: 'MODELS_LIST_FAILURE',
+    MODELS_DATA_EXPLAIN_REQUEST: 'MODELS_DATA_EXPLAIN_REQUEST',
+    MODELS_DATA_EXPLAIN_SUCCESS: 'MODELS_DATA_EXPLAIN_SUCCESS',
+    MODELS_DATA_EXPLAIN_FAILURE: 'MODELS_DATA_EXPLAIN_FAILURE',
     MODELS_DATA_LIST_REQUEST: 'MODELS_DATA_LIST_REQUEST',
     MODELS_DATA_LIST_SUCCESS: 'MODELS_DATA_LIST_SUCCESS',
     MODELS_DATA_LIST_FAILURE: 'MODELS_DATA_LIST_FAILURE',
@@ -29,10 +32,10 @@ export const types = {
     MODELS_EXPLAIN_FAILURE: 'MODELS_EXPLAIN_FAILURE',
 };
 
-export const fetchModels = (organizationId, page = 0) => (dispatch) => {
+export const fetchModels = (organizationId, options) => (dispatch) => {
     dispatch({type: types.MODELS_LIST_REQUEST});
 
-    api.fetch(organizationId, page)
+    api.fetch(organizationId, options)
         .then(models => dispatch({
             type: types.MODELS_LIST_SUCCESS,
             models
@@ -61,17 +64,17 @@ export const fetchModel = (id, organizationId, options) => (dispatch) => {
         }));
 };
 
-export const fetchModelData = (modelId, organizationId, options) => (dispatch) => {
+export const fetchModelDataset = (modelId, organizationId, options) => (dispatch) => {
     if (!modelId) {
         return;
     }
 
     dispatch({type: types.MODELS_DATA_LIST_REQUEST, modelId});
 
-    api.fetchModelData(modelId, organizationId, options)
-        .then(data => dispatch({
+    api.fetchModelDataset(modelId, organizationId, options)
+        .then(dataset => dispatch({
             type: types.MODELS_DATA_LIST_SUCCESS,
-            data,
+            dataset,
             modelId
         }))
         .catch(error => dispatch({
@@ -118,15 +121,19 @@ export const updateModel = (id, data, organizationId) => (dispatch) => {
 };
 
 export const explainModelData = (modelId, data, organizationId) => (dispatch) => {
-    dispatch({ type: types.DEMO_MODEL_DATA_EXPLAIN_REQUEST, modelId });
+    dispatch({ type: types.MODELS_DATA_EXPLAIN_REQUEST, modelId });
 
     api.explain(modelId, data, organizationId)
         .then(explanation => dispatch({
-            type: types.DEMO_MODEL_DATA_EXPLAIN_SUCCESS,
-            explanation
+            type: types.MODELS_DATA_EXPLAIN_SUCCESS,
+            explanation,
+            modelId,
+            data
         }))
         .catch(error => dispatch({
-            type: types.DEMO_MODEL_DATA_EXPLAIN_FAILURE,
-            error
+            type: types.MODELS_DATA_EXPLAIN_FAILURE,
+            error,
+            modelId,
+            data
         }));
 };

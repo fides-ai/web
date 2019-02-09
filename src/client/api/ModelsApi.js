@@ -35,9 +35,9 @@ class ModelsApi extends BaseApi {
             });
     }
 
-    fetchModelData(id, organizationId) {
+    fetchModelDataset(id, organizationId) {
         let params = {
-            url: `/organizations/${organizationId}/models/${id}/data`,
+            url: `/organizations/${organizationId}/models/${id}/dataset`,
             method: 'GET'
         };
         return this.request(params)

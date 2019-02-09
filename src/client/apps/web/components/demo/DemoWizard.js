@@ -6,16 +6,16 @@
 import PropTypes from 'prop-types';
 import DemoWizardStep from './DemoWizardStep';
 import ModelsForm from './ModelsForm';
-import ModelDataForm from './ModelDataForm';
+import ModelDatasetForm from './ModelDatasetForm';
 import ExplainPanel from './ExplanationPanel';
 
 
-const DemoWizard = ({ models, data, explanation, selectedModel, selectedData, fetchingModels, fetchingData, fetchingExplanation, onSelectModel, onSelectData }) => {
+const DemoWizard = ({ models, dataset, explanation, selectedModel, selectedData, fetchingModels, fetchingData, fetchingExplanation, onSelectModel, onSelectData }) => {
     const modelsStepTitle = selectedModel ? selectedModel.name : 'Choose a model';
-    const modelDataStepTitle = selectedModel ? selectedModel.name : 'Choose a prediction to explain';
+    const modelDatasetStepTitle = selectedModel ? selectedModel.name : 'Choose a prediction to explain';
 
     const modelsFormExpanded = !selectedModel;
-    const modelDataFormExpanded = selectedModel;
+    const modelDatasetFormExpanded = selectedModel;
     const explainExpanded = selectedModel && selectedData;
 
     return (
@@ -29,8 +29,8 @@ const DemoWizard = ({ models, data, explanation, selectedModel, selectedData, fe
                         fetching={fetchingModels} />
                 </DemoWizardStep>
 
-                <DemoWizardStep className="model-data-step" title={modelDataStepTitle} expanded={modelDataFormExpanded}>
-                    <ModelDataForm data={data}
+                <DemoWizardStep className="model-data-step" title={modelDatasetStepTitle} expanded={modelDatasetFormExpanded}>
+                    <ModelDatasetForm dataset={dataset}
                         selectedData={selectedData}
                         onSelect={onSelectData}
                         fetching={fetchingData} />
@@ -50,7 +50,7 @@ const DemoWizard = ({ models, data, explanation, selectedModel, selectedData, fe
 
 DemoWizard.propTypes = {
     models: PropTypes.array,
-    data: PropTypes.array,
+    dataset: PropTypes.array,
     explanation: PropTypes.object,
     selectedModel: PropTypes.object,
     selectedData: PropTypes.object,
