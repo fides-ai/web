@@ -6,6 +6,19 @@
 
 import BaseApi from './BaseApi';
 
+const models = [
+    { id: '0', name: 'Titanic', description: 'Titanic survival prediction model.' },
+    { id: '1', name: 'Fraud Detection', description: 'Fraud detection model.' }
+];
+
+const dataset = {
+    '0': [
+        {id: '0', age: 10,},
+        {id: '1', age: 20,},
+        {id: '2', age: 30,},
+    ]
+};
+
 
 class ModelsApi extends BaseApi {
 
@@ -15,11 +28,12 @@ class ModelsApi extends BaseApi {
             method: 'GET',
             params: options
         };
-        return this.request(params)
-            .then(response => response.data)
-            .catch(error => {
-                throw error;
-            });
+        // return this.request(params)
+        //     .then(response => response.data)
+        //     .catch(error => {
+        //         throw error;
+        //     });
+        return Promise.resolve(() => models);
     }
 
     fetchOne(id, organizationId, options) {
@@ -28,11 +42,12 @@ class ModelsApi extends BaseApi {
             method: 'GET',
             params: options
         };
-        return this.request(params)
-            .then(response => response.data)
-            .catch(error => {
-                throw error;
-            });
+        // return this.request(params)
+        //     .then(response => response.data)
+        //     .catch(error => {
+        //         throw error;
+        //     });
+        return Promise.resolve(() => models[id]);
     }
 
     fetchModelDataset(id, organizationId) {
@@ -40,11 +55,12 @@ class ModelsApi extends BaseApi {
             url: `/organizations/${organizationId}/models/${id}/dataset`,
             method: 'GET'
         };
-        return this.request(params)
-            .then(response => response.data)
-            .catch(error => {
-                throw error;
-            });
+        // return this.request(params)
+        //     .then(response => response.data)
+        //     .catch(error => {
+        //         throw error;
+        //     });
+        return Promise.resolve(() =>  dataset[id]);
     }
 
     create(data, organizationId, options) {
@@ -78,8 +94,8 @@ class ModelsApi extends BaseApi {
                 throw error;
             });
     }
-    
-    explain(id, data, organizationId,options) {
+
+    explain(id, data, organizationId, options) {
         let params = {
             url: `/organizations/${organizationId}/models/${id}/explain`,
             method: 'POST',

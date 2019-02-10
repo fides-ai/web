@@ -11,16 +11,15 @@ import * as Promise from 'bluebird';
 import DemoWizard from '../../components/demo/DemoWizard';
 import { pages, pageLoaded } from '../../actions/app';
 import * as modelsActions from '../../actions/models';
-import { getModels, getModelData, getModelDataExplanation, } from '../../reducers';
+import { getModels, getModel, getModelDataset, getModelData, getModelDataExplanation, isFetchingModels, isFetchingModelData, isFetchingModelDataExplanation } from '../../reducers';
 import { getOrganizationId } from '../../reducers/organization';
-import { getModel } from '../../reducers/models';
 
 
 const DEMO_ORG_ID = 0;
 
 
 class DemoPage extends React.Component {
-
+    
     constructor(props, context) {
         super(props, context);
 
@@ -35,13 +34,14 @@ class DemoPage extends React.Component {
     }
 
     componentDidMount() {
+        const { organizationId, selectedModelId } = this.props;
         this.props.actions.pageLoaded(pages.DEMO_PAGE);
+        this.props.actions.fetchModels(DEMO_ORG_ID);
+        this.props.actions.fetchModels(organizationId);
 
-        const { organizationId } = this.props;
-        Promise.all([
-            this.props.actions.fetchModels(DEMO_ORG_ID),
-            this.props.actions.fetchModels(organizationId)
-        ]);
+        if (selectedModelId && !selectedModel) {
+            this.props.actions.fetchModel(organizationId, selectedModelId);
+        }
     }
 
     handleSelectModel(model) {
@@ -99,9 +99,9 @@ const mapStateToProps = (state, ownProps) => {
     const organizationId = getOrganizationId(state);
     const models = getModels(state, organizationId).concat(getModels(state, DEMO_ORG_ID));
     selectedModel = selectedModel || getModel(state, selectedModelId);
-    const dataset = getModelDataset(state, selectedModel.id);
-    selectedData = selectedData || ;
-    const explanation = getModelDataExplanation(state, selectedModel.id, selectedData);
+    const dataset = selectedModel && getModelDataset(state, selectedModel.id);
+    selectedData = selectedData || getModelData(state, selectedModelId, selectedDataId);
+    const explanation = selectedModel && getModelDataExplanation(state, selectedModel.id, selectedData);
     const nextState = {
         ...ownProps,
         organizationId,

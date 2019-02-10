@@ -33,7 +33,7 @@ export const types = {
 };
 
 export const fetchModels = (organizationId, options) => (dispatch) => {
-    dispatch({type: types.MODELS_LIST_REQUEST});
+    dispatch({ type: types.MODELS_LIST_REQUEST });
 
     api.fetch(organizationId, options)
         .then(models => dispatch({
@@ -51,17 +51,20 @@ export const fetchModel = (id, organizationId, options) => (dispatch) => {
         return;
     }
 
-    dispatch({type: types.MODELS_GET_REQUEST, id});
+    dispatch({ 
+        type: types.MODELS_GET_REQUEST, 
+        model: { id }
+    });
 
-    api.fetchOne(id, organizationId, options)
-        .then(model => dispatch({
-            type: types.MODELS_GET_SUCCESS,
-            model
-        }))
-        .catch(error => dispatch({
-            type: types.MODELS_GET_FAILURE,
-            error
-        }));
+api.fetchOne(id, organizationId, options)
+    .then(model => dispatch({
+        type: types.MODELS_GET_SUCCESS,
+        model
+    }))
+    .catch(error => dispatch({
+        type: types.MODELS_GET_FAILURE,
+        error
+    }));
 };
 
 export const fetchModelDataset = (modelId, organizationId, options) => (dispatch) => {
@@ -69,7 +72,7 @@ export const fetchModelDataset = (modelId, organizationId, options) => (dispatch
         return;
     }
 
-    dispatch({type: types.MODELS_DATA_LIST_REQUEST, modelId});
+    dispatch({ type: types.MODELS_DATA_LIST_REQUEST, modelId });
 
     api.fetchModelDataset(modelId, organizationId, options)
         .then(dataset => dispatch({
@@ -88,8 +91,8 @@ export const createModel = (data, organizationId) => (dispatch) => {
     if (!data) {
         return;
     }
-    
-    dispatch({type: types.MODELS_GET_REQUEST, id});
+
+    dispatch({ type: types.MODELS_GET_REQUEST, id });
 
     api.create(data, organizationId)
         .then(model => dispatch({
@@ -107,7 +110,7 @@ export const updateModel = (id, data, organizationId) => (dispatch) => {
         return;
     }
 
-    dispatch({type: types.MODELS_UPDATE_REQUEST, id});
+    dispatch({ type: types.MODELS_UPDATE_REQUEST, id });
 
     api.update(id, data, organizationId)
         .then(model => dispatch({

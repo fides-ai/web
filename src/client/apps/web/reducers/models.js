@@ -31,8 +31,6 @@ const byId = (state = {}, action) => {
                 return state;
             }
 
-            action.model.selected = true;
-
             return {
                 ...state,
                 [action.model.id]: action.model
@@ -68,17 +66,19 @@ const datasetById = (state = {}, action) => {
 const explanationById = (state = {}, action) => {
     const { modelId } = action;
     switch (action.type) {
-        case types.MODELS_DATA_EXPLAIN_REQUEST:
-            return { ...state, [modelId]: true };
         case types.MODELS_DATA_EXPLAIN_SUCCESS:
-        case types.MODELS_DATA_EXPLAIN_FAILURE:
-            return { ...state, [modelId]: false };
+            state[modelId] = state[modelId] || {};
+            const explananation = {
+                ...state[modelId],
+                [action.dataId]: action.explanation
+            };
+            return { ...state, [modelId]: explananation };
         default:
             return state;
     }
 }
 
-const fetching = (state = {}, action) => {
+const fetching = (state = false, action) => {
     switch (action.type) {
         case types.MODELS_LIST_REQUEST:
             return true;
@@ -158,20 +158,42 @@ export default models;
 export const getModels = (state, organizationId) => {
     let models = state && state.ids && state.ids.filter(model => model.organizationId === organizationId) || [];
     return models;
-}
+};
 
-export const getModel = (state, id) => state && state.byId[id];
+export const getModel = (state, id) => {
+    return id && state.byId[id];
+};
 
-export const getModelDataset = (state) => state.dataById[modelId];
+export const getModelDataset = (state, modelId) => {
+    return modelId && state.dataById[modelId];
+};
+
+export const getModelData = (state, modelId, dataId) => {
+    if (!modelId || !dataId) {
+        return null;
+    }
+
+    const dataset = state.datasetById[modelId];
+    const data = dataset.find(data => data.id === dataId);
+    return data;
+};
 
 export const getModelDataExplanation = (state, modelId, dataId) => {
-    state.explanationById[modelId]; // todo!!!
-}
+    return modelId && dataId && state.explanationById[modelId] && state.explanationById[modelId][dataId]; // todo!!!
+};
 
-export const isFetching = (state) => state.fetching;
+export const isFetching = (state) => {
+    return state.fetching;
+};
 
-export const isFetchingModel = (state, id) => state.fetchingById[id];
+export const isFetchingModel = (state, id) => {
+    return !!id && state.fetchingById[id];
+};
 
-export const isFetchingData = (state, modelId) => state.fetchingDataById[modelId];
+export const isFetchingData = (state, modelId) => {
+    return !!modelId && state.fetchingDataById[modelId];
+};
 
-export const isFetchingExplanation = (state, modelId) => state.fetchingDataById[modelId];
+export const isFetchingExplanation = (state, modelId) => {
+    return !!modelId && state.fetchingDataById[modelId];
+};

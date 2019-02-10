@@ -38,7 +38,17 @@ class ModelsForm extends React.Component {
 
         return (
             <div className="models-form">
-                <h3>Models form content here</h3>
+                <div className="models row">
+                    {models.map(model => (
+                        <div className="model col-lg-3 col-xs-6" onClick={this.onSelect}>
+                            <div className="small-box bg-aqua">
+                                <div className="inner">
+                                    <h3>{model.name}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }
@@ -47,7 +57,7 @@ class ModelsForm extends React.Component {
 ModelsForm.propTypes = {
     models: PropTypes.array,
     selectedModel: PropTypes.object,
-    onSelec: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
     fetching: PropTypes.bool
 };
 
