@@ -54,14 +54,16 @@ class DemoPage extends React.Component {
         }
     }
 
-    handleSelectData(model, data) {
+    handleSelectData(selectedData) {
         this.setState({
-            selectedData: data,
-            selectedDataId: data.id
+            selectedData,
+            selectedDataId: selectedData.id
         });
 
-        if (model && data) {
-            this.props.actions.explainModelData(model, data);
+        const {selectedModel} = this.state;
+
+        if (selectedModel && selectedData) {
+            this.props.actions.explainModelData(selectedModel, selectedData);
         }
     }
 

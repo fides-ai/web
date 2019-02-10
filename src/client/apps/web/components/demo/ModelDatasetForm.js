@@ -42,7 +42,7 @@ class ModelDatasetForm extends React.Component{
                     <table className="table table-hover">
                         <tbody>
                             {dataset && dataset.map((data, index) =>
-                                <tr key={index} onClick={this.onSelect}>
+                                <tr key={index} onClick={this.onSelect} data-id={data.id}>
                                     <td>{index+1}</td>
                                     <td>{data.description}</td>
                                 </tr>

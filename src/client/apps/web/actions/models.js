@@ -127,12 +127,14 @@ export const explainModelData = (modelId, data, organizationId) => (dispatch) =>
     dispatch({ type: types.MODELS_DATA_EXPLAIN_REQUEST, modelId });
 
     api.explain(modelId, data, organizationId)
-        .then(explanation => dispatch({
-            type: types.MODELS_DATA_EXPLAIN_SUCCESS,
-            explanation,
-            modelId,
-            data
-        }))
+        .then(explanation => {
+            return dispatch({
+                type: types.MODELS_DATA_EXPLAIN_SUCCESS,
+                explanation,
+                modelId,
+                data
+            });
+        })
         .catch(error => dispatch({
             type: types.MODELS_DATA_EXPLAIN_FAILURE,
             error,

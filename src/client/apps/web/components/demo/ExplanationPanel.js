@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
 
 
 const ExplanationPanel = ({explanation, model, data, fetching}) => {
+    const {imageUrl} = explanation;
     return (
         <div className="explanation-panel">
-            <h3>Explanation here</h3>
+            <img src={imageUrl} />
         </div>
     );
 };

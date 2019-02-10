@@ -19,8 +19,12 @@ const dataset = {
         { id: '2', age: 30, description: 'Customer with a job' },
     ],
     '1': [
-        
+
     ]
+};
+
+const explanation = {
+    imageUrl: '/bower_components/lime.png'
 };
 
 
@@ -111,11 +115,14 @@ class ModelsApi extends BaseApi {
                 data
             }
         };
-        return this.request(params)
-            .then(response => response.data)
-            .catch(error => {
-                throw error;
-            });
+        // return this.request(params)
+        //     .then(response => response.data)
+        //     .catch(error => {
+        //         throw error;
+        //     });
+
+        return Promise.resolve()
+            .then(() => explanation);
     }
 }
 

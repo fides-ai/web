@@ -68,7 +68,7 @@ const datasetById = (state = {}, action) => {
 const explanation = (state = null, action) => {
     switch (action.type) {
         case types.MODELS_DATA_EXPLAIN_SUCCESS:
-            return action.explananation;
+            return action.explanation;
         default:
             return state;
     }
@@ -119,7 +119,7 @@ const fetchingDataset = (state = false, action) => {
 const fetchingExplanation = (state = false, action) => {
     switch (action.type) {
         case types.MODELS_DATA_EXPLAIN_REQUEST:
-            return true
+            return true;
         case types.MODELS_DATA_EXPLAIN_SUCCESS:
         case types.MODELS_DATA_EXPLAIN_FAILURE:
             return false;

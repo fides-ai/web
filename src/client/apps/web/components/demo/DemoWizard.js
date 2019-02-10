@@ -17,35 +17,44 @@ const DemoWizard = ({ models, dataset, explanation, selectedModel, selectedData,
     const modelDatasetStepTitle = 'Choose a prediction to explain';
     const modelExplanationTitle = 'Explanation';
     const modelsFormExpanded = !selectedModel;
-    const modelDatasetFormExpanded = selectedModel;
-    const explainExpanded = selectedModel && selectedData;
+    const modelDatasetFormExpanded = !!selectedModel;
+    const explainExpanded = !!(selectedModel && selectedData);
 
     return (
         <div className="wizard">
-            <Accordion accordion={false}>
-                <DemoWizardItem className="models-step" title={modelsStepTitle} expanded={modelsFormExpanded}>
-                    <ModelsForm models={models}
-                        selectedModel={selectedModel}
-                        onSelect={onSelectModel}
-                        fetching={fetchingModels} />
-                </DemoWizardItem>
+            <div className="col-md-offset-2 col-md-8">
+                <div className="box box-solid">
+                    <div className="box-header">
 
-                <DemoWizardItem className="model-data-step" title={modelDatasetStepTitle} expanded={modelDatasetFormExpanded}>
-                    <ModelDatasetForm dataset={dataset}
-                        selectedData={selectedData}
-                        onSelect={onSelectData}
-                        fetching={fetchingData} />
-                </DemoWizardItem>
+                    </div>
+                    <div className="box-body">
+                        <Accordion accordion={false}>
+                            <DemoWizardItem className="models-step" title={modelsStepTitle} expanded={modelsFormExpanded}>
+                                <ModelsForm models={models}
+                                    selectedModel={selectedModel}
+                                    onSelect={onSelectModel}
+                                    fetching={fetchingModels} />
+                            </DemoWizardItem>
 
-                <DemoWizardItem className="explain-step" title={modelExplanationTitle} expanded={explainExpanded}>
-                    {explanation && 
-                    <ExplainPanel explanation={explanation}
-                        model={selectedModel}
-                        data={selectedData}
-                        fetching={fetchingExplanation} />
-                    }
-                </DemoWizardItem>
-            </Accordion>
+                            <DemoWizardItem className="model-data-step" title={modelDatasetStepTitle} expanded={modelDatasetFormExpanded}>
+                                <ModelDatasetForm dataset={dataset}
+                                    selectedData={selectedData}
+                                    onSelect={onSelectData}
+                                    fetching={fetchingData} />
+                            </DemoWizardItem>
+
+                            <DemoWizardItem className="explain-step" title={modelExplanationTitle} expanded={explainExpanded}>
+                                {explanation &&
+                                    <ExplainPanel explanation={explanation}
+                                        model={selectedModel}
+                                        data={selectedData}
+                                        fetching={fetchingExplanation} />
+                                }
+                            </DemoWizardItem>
+                        </Accordion>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
