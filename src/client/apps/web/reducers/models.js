@@ -46,7 +46,6 @@ const ids = (state = [], action) => {
             return action.models.map(model => model.id);
         case types.MODELS_CREATE_REQUEST:
         case types.MODELS_CREATE_SUCCESS:
-            action.model.selected = true;
             return [...state, action.model.id];
         default:
             return state;
@@ -56,23 +55,20 @@ const ids = (state = [], action) => {
 const datasetById = (state = {}, action) => {
     switch (action.type) {
         case types.MODELS_DATA_LIST_SUCCESS:
-            const { modelId, dataset } = action;
-            return { ...state, [modelId]: dataset }
+            const nextState = {}; // shallow copy of state
+            action.dataset.forEach(data => {
+                nextState[data.id] = data;
+            });
+            return nextState;
         default:
             return state;
     }
 };
 
-const explanationById = (state = {}, action) => {
-    const { modelId } = action;
+const explanation = (state = null, action) => {
     switch (action.type) {
         case types.MODELS_DATA_EXPLAIN_SUCCESS:
-            state[modelId] = state[modelId] || {};
-            const explananation = {
-                ...state[modelId],
-                [action.dataId]: action.explanation
-            };
-            return { ...state, [modelId]: explananation };
+            return action.explananation;
         default:
             return state;
     }
@@ -108,32 +104,25 @@ const fetchingById = (state = {}, action) => {
     }
 };
 
-const fetchingDataById = (state = {}, action) => {
+const fetchingDataset = (state = false, action) => {
     switch (action.type) {
         case types.MODELS_DATA_LIST_REQUEST:
-            return { ...state, [action.modelId]: true };
+            return true;
         case types.MODELS_DATA_LIST_SUCCESS:
         case types.MODELS_DATA_LIST_FAILURE:
-            return { ...state, [action.modelId]: false };
+            return false;
         default:
             return state;
     }
 };
 
-const fetchingExplanationById = (state = {}, action) => {
-    const { modelId, data } = action;
-    const nextState = { ...state };
-
+const fetchingExplanation = (state = false, action) => {
     switch (action.type) {
-        case types.MODELS_DATA_LIST_REQUEST:
-            nextState[modelId] = state[modelId] || {};
-            nextState[modelId][data.id] = true;
-            return nextState;
-        case types.MODELS_DATA_LIST_SUCCESS:
-        case types.MODELS_DATA_LIST_FAILURE:
-            nextState[modelId] = state[modelId] || {};
-            nextState[modelId][data.id] = false;
-            return nextState;
+        case types.MODELS_DATA_EXPLAIN_REQUEST:
+            return true
+        case types.MODELS_DATA_EXPLAIN_SUCCESS:
+        case types.MODELS_DATA_EXPLAIN_FAILURE:
+            return false;
         default:
             return state;
     }
@@ -143,11 +132,11 @@ const models = combineReducers({
     byId,
     ids,
     datasetById,
-    explanationById,
+    explanation,
     fetching,
     fetchingById,
-    fetchingDataById,
-    fetchingExplanationById,
+    fetchingDataset,
+    fetchingExplanation,
 });
 
 export default models;
@@ -156,7 +145,7 @@ export default models;
 // selectors
 
 export const getModels = (state, organizationId) => {
-    let models = state && state.ids && state.ids.filter(model => model.organizationId === organizationId) || [];
+    let models = state && Object.values(state.byId).filter(model => model.organizationId === organizationId) || [];
     return models;
 };
 
@@ -164,22 +153,12 @@ export const getModel = (state, id) => {
     return id && state.byId[id];
 };
 
-export const getModelDataset = (state, modelId) => {
-    return modelId && state.dataById[modelId];
+export const getDataset = (state) => {
+    return Object.values(state.datasetById);
 };
 
-export const getModelData = (state, modelId, dataId) => {
-    if (!modelId || !dataId) {
-        return null;
-    }
-
-    const dataset = state.datasetById[modelId];
-    const data = dataset.find(data => data.id === dataId);
-    return data;
-};
-
-export const getModelDataExplanation = (state, modelId, dataId) => {
-    return modelId && dataId && state.explanationById[modelId] && state.explanationById[modelId][dataId]; // todo!!!
+export const getExplanation = (state) => {
+    return state.explanation;
 };
 
 export const isFetching = (state) => {
@@ -190,10 +169,10 @@ export const isFetchingModel = (state, id) => {
     return !!id && state.fetchingById[id];
 };
 
-export const isFetchingData = (state, modelId) => {
-    return !!modelId && state.fetchingDataById[modelId];
+export const isFetchingDataset = (state) => {
+    return state.fetchingDataset;
 };
 
-export const isFetchingExplanation = (state, modelId) => {
-    return !!modelId && state.fetchingDataById[modelId];
+export const isFetchingExplanation = (state) => {
+    return state.fetchingExplanation;
 };

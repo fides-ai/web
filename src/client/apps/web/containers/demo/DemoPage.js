@@ -7,11 +7,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as Promise from 'bluebird';
 import DemoWizard from '../../components/demo/DemoWizard';
 import { pages, pageLoaded } from '../../actions/app';
 import * as modelsActions from '../../actions/models';
-import { getModels, getModel, getModelDataset, getModelData, getModelDataExplanation, isFetchingModels, isFetchingModelData, isFetchingModelDataExplanation } from '../../reducers';
+import { getModels, getModelDataset, getModelExplanation, isFetchingModels, isFetchingModelDataset, isFetchingModelExplanation } from '../../reducers';
 import { getOrganizationId } from '../../reducers/organization';
 
 
@@ -19,7 +18,7 @@ const DEMO_ORG_ID = 0;
 
 
 class DemoPage extends React.Component {
-    
+
     constructor(props, context) {
         super(props, context);
 
@@ -67,13 +66,14 @@ class DemoPage extends React.Component {
     }
 
     render() {
-        const { models, data, explanation, fetchingModels, fetchingData, fetchingExplanation } = this.props;
+        const { models, dataset, explanation, fetchingModels, fetchingData, fetchingExplanation } = this.props;
         const { selectedModel, selectedData } = this.state;
+
         return (
             <div className="wizard-page row">
                 <div className="col-md-12">
                     <DemoWizard models={models}
-                        data={data}
+                        dataset={dataset}
                         explanation={explanation}
                         selectedModel={selectedModel}
                         selectedData={selectedData}
@@ -95,24 +95,22 @@ DemoPage.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    let { selectedModel, selectedModelId, selectedData, selectedDataId } = state;
     const organizationId = getOrganizationId(state);
     const models = getModels(state, organizationId).concat(getModels(state, DEMO_ORG_ID));
-    selectedModel = selectedModel || getModel(state, selectedModelId);
-    const dataset = selectedModel && getModelDataset(state, selectedModel.id);
-    selectedData = selectedData || getModelData(state, selectedModelId, selectedDataId);
-    const explanation = selectedModel && getModelDataExplanation(state, selectedModel.id, selectedData);
-    const nextState = {
+    const dataset = getModelDataset(state);
+    const explanation = getModelExplanation(state);
+    const fetchingModels = isFetchingModels(state);
+    const fetchingData = isFetchingModelDataset(state);
+    const fetchingExplanation =  isFetchingModelExplanation(state);
+    return {
         ...ownProps,
-        organizationId,
         models,
         dataset,
         explanation,
-        fetchingModels: isFetchingModels(state),
-        fetchingData: isFetchingModelData(state, selectedModelId),
-        fetchingExplanation: isFetchingModelDataExplanation(state, selectedModelId),
+        fetchingModels,
+        fetchingData,
+        fetchingExplanation,
     };
-    return nextState;
 };
 
 const mapDispatchToProps = (dispatch) => {

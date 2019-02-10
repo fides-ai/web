@@ -36,18 +36,14 @@ export const getModel = (state, organizationId, modelId) => {
 
 export const getModels = (state, organizationId) => fromModel.getModels(state.models, organizationId);
 
-export const getModelDataset = (state) => fromModel.getModelDataset(state.models);
+export const getModelDataset = (state) => fromModel.getDataset(state.models);
 
-export const getModelData = (state, modelId, dataId) => {
-    return fromModel.getModelData(state.models, modelId, dataId);
-};
-
-export const getModelDataExplanation = (state, model, data) => fromModel.getModelDataExplanation(state.models, model, data);
+export const getModelExplanation = (state) => fromModel.getExplanation(state.models);
 
 export const isFetchingModels = (state) => fromModel.isFetching(state.models);
 
 export const isFetchingModel = (state, id) => fromModel.isFetchingModel(state.models, id);
 
-export const isFetchingModelData = (state, id) => fromModel.isFetchingData(state.models);
+export const isFetchingModelDataset = (state) => fromModel.isFetchingDataset(state.models);
 
-export const isFetchingModelDataExplanation = (state, id) => fromModel.isFetchingExplanation(state.models, id);
+export const isFetchingModelExplanation = (state) => fromModel.isFetchingExplanation(state.models);

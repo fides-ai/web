@@ -10,11 +10,11 @@ import ModelsForm from './ModelsForm';
 import ModelDatasetForm from './ModelDatasetForm';
 import ExplainPanel from './ExplanationPanel';
 import { Accordion } from 'react-accessible-accordion';
-import 'react-accessible-accordion/dist/fancy-example.css';
+import '../../stylesheets/Demo.scss';
 
 const DemoWizard = ({ models, dataset, explanation, selectedModel, selectedData, fetchingModels, fetchingData, fetchingExplanation, onSelectModel, onSelectData }) => {
     const modelsStepTitle = selectedModel ? selectedModel.name : 'Choose a model';
-    const modelDatasetStepTitle = selectedModel ? selectedModel.name : 'Choose a prediction to explain';
+    const modelDatasetStepTitle = 'Choose a prediction to explain';
     const modelExplanationTitle = 'Explanation';
     const modelsFormExpanded = !selectedModel;
     const modelDatasetFormExpanded = selectedModel;
@@ -22,9 +22,7 @@ const DemoWizard = ({ models, dataset, explanation, selectedModel, selectedData,
 
     return (
         <div className="wizard">
-            <h1>Hello World</h1>
-
-            <Accordion>
+            <Accordion accordion={false}>
                 <DemoWizardItem className="models-step" title={modelsStepTitle} expanded={modelsFormExpanded}>
                     <ModelsForm models={models}
                         selectedModel={selectedModel}
@@ -48,32 +46,6 @@ const DemoWizard = ({ models, dataset, explanation, selectedModel, selectedData,
                     }
                 </DemoWizardItem>
             </Accordion>
-
-
-            {/* <Accordion allowMultiple={false} openNextAccordionItem={true}>
-
-                <DemoWizardStep className="models-step" title={modelsStepTitle} expanded={modelsFormExpanded}>
-                    <ModelsForm models={models}
-                        selectedModel={selectedModel}
-                        onSelect={onSelectModel}
-                        fetching={fetchingModels} />
-                </DemoWizardStep>
-
-                <DemoWizardStep className="model-data-step" title={modelDatasetStepTitle} expanded={modelDatasetFormExpanded}>
-                    <ModelDatasetForm dataset={dataset}
-                        selectedData={selectedData}
-                        onSelect={onSelectData}
-                        fetching={fetchingData} />
-                </DemoWizardStep>
-
-                <DemoWizardStep className="explain-step" title={modelDataFormTitle} expanded={explainExpanded}>
-                    <ExplainPanel explanation={explanation}
-                        model={selectedModel}
-                        data={selectedData}
-                        fetching={fetchingExplanation} />
-                </DemoWizardStep>
-
-            </Accordion> */}
         </div>
     );
 }

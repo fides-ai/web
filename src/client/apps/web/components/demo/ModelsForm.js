@@ -23,27 +23,36 @@ class ModelsForm extends React.Component {
     onSelect(event) {
         event.preventDefault();
 
-        const selectedModelId = event.target.id;
+        const id = event.currentTarget.getAttribute('data-id');
         const { models, onSelect } = this.props;
-        selectedModel = models.find(m => m.id === selectedModelId)
+        const selectedModel = models.find(m => m.id === id);
 
         this.setState({ selectedModel });
 
-        onSelect(model);
+        onSelect(selectedModel);
     }
 
     render() {
-        const { models, onSelect, fetching } = this.props;
+        const { models, fetching } = this.props;
         const { selectedModel } = this.state;
 
         return (
             <div className="models-form">
                 <div className="models row">
-                    {models.map(model => (
-                        <div className="model col-lg-3 col-xs-6" onClick={this.onSelect}>
-                            <div className="small-box bg-aqua">
-                                <div className="inner">
-                                    <h3>{model.name}</h3>
+                    {models && models.map((model, index) => (
+                        <div className="model" key={index} data-id={model.id} onClick={this.onSelect}>
+                            <div className="col-lg-3 col-xs-6">
+                                <div className="small-box">
+                                    <div className="inner">
+                                        <h4>{model.name}</h4>
+                                        <p></p>
+                                    </div>
+                                    <div className="icon">
+
+                                    </div>
+                                    <a href="#" className="small-box-footer">
+                                        More info <i className="fa fa-arrow-circle-right"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>

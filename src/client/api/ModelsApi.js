@@ -4,6 +4,7 @@
 
 'use strict';
 
+import * as Promise from 'bluebird';
 import BaseApi from './BaseApi';
 
 const models = [
@@ -13,9 +14,12 @@ const models = [
 
 const dataset = {
     '0': [
-        {id: '0', age: 10,},
-        {id: '1', age: 20,},
-        {id: '2', age: 30,},
+        { id: '0', age: 35, description: 'Unemployed customer at the age of 35' },
+        { id: '1', age: 20, description: 'Customer without a job' },
+        { id: '2', age: 30, description: 'Customer with a job' },
+    ],
+    '1': [
+        
     ]
 };
 
@@ -33,7 +37,8 @@ class ModelsApi extends BaseApi {
         //     .catch(error => {
         //         throw error;
         //     });
-        return Promise.resolve(() => models);
+        return Promise.resolve()
+            .then(() => models);
     }
 
     fetchOne(id, organizationId, options) {
@@ -47,7 +52,8 @@ class ModelsApi extends BaseApi {
         //     .catch(error => {
         //         throw error;
         //     });
-        return Promise.resolve(() => models[id]);
+        return Promise.resolve()
+            .then(() => models[id]);
     }
 
     fetchModelDataset(id, organizationId) {
@@ -60,7 +66,8 @@ class ModelsApi extends BaseApi {
         //     .catch(error => {
         //         throw error;
         //     });
-        return Promise.resolve(() =>  dataset[id]);
+        return Promise.resolve()
+            .then(() => dataset[id]);
     }
 
     create(data, organizationId, options) {
